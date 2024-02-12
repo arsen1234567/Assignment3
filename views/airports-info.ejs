@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Airports Info</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css">
+    <style>
+        body {
+            background-color: #4B515D;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/weather">Weather App</a>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/history">History</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/weather">Main</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Profile
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <li><a class="dropdown-item" href="#">My account</a></li>
+                            <li><a class="dropdown-item" href="/login">Log out</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4 bg-light p-5 rounded">
+        <h1 class="text-dark">Airports Information</h1>
+        <% if (airportsData && airportsData.length > 0) { %>
+            <% airportsData.forEach(function(airport) { %>
+                <div class="mb-3">
+                    <p><strong>Name:</strong> <%= airport.name %></p>
+                    <p><strong>IATA Code:</strong> <%= airport.iataCode %></p>
+                </div>
+            <% }) %>
+        <% } else { %>
+            <p>No airports information available.</p>
+        <% } %>
+    </div>
+
+    <footer class="footer bg-dark text-light pt-4 mt-auto">
+        <div class="container">
+            <div class="row text-center text-md-left">
+                <div class="col-md-6 mb-3">
+                    <a class="navbar-brand text-white" href="#">Weather App</a>
+                    <p>Stay updated with the latest weather conditions anywhere, anytime.</p>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <h5>Connect with Us</h5>
+                    <a href="#" target="_blank" class="text-white me-md-4 me-3"><i class="bi bi-facebook"></i></a>
+                    <a href="#" target="_blank" class="text-white me-md-4 me-3"><i class="bi bi-twitter"></i></a>
+                    <a href="#" target="_blank" class="text-white me-md-4 me-3"><i class="bi bi-instagram"></i></a>
+                    <a href="#" target="_blank" class="text-white"><i class="bi bi-linkedin"></i></a>
+                </div>
+            </div>
+            <hr class="my-4">
+            <div class="row text-center">
+                <div class="col-12 mb-3">
+                    © 2024 Serikkaliyev A. - SE-2204. All Rights Reserved.
+                </div>
+                <div class="col-12">
+                    <a href="#" class="text-white me-2">Privacy Policy</a>
+                    <a href="#" class="text-white">Terms of Use</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js"></script>
+</body>
+</html>

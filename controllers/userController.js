@@ -69,6 +69,7 @@ const login = async(req, res, next) => {
         return res.status(400).json({message:"incorrect password"})
     }
     req.session.userId = existingUser._id.toString();
+    req.session.isAdmin = existingUser.admin;
     req.session.save(err => {
         if (err) {
             console.error("Session save error:", err);
@@ -78,18 +79,25 @@ const login = async(req, res, next) => {
     });   
 }
 
-const getHistory = async (req, res, next) => {
-    const userId = req.session.userId;
-    console.log("Session UserID:", req.session.userId);
+const getHistory = async (req, res) => {
     try {
-        const user = await User.findById(userId).populate('history');
+        const userId = req.session.userId;
+        const user = await User.findById(userId)
+                               .populate('history.refId')
+                               .lean();
+
         if (!user) {
-            return res.status(404).json({ message: "history not found" });
+            return res.status(404).send('User not found');
         }
-        res.render('history', { user: user, history: user.history });
-    } catch (err) {
-        console.log(err);
-        return res.status(500).json({ message: "Error fetching user history" });
+
+
+        res.render('history', { 
+            user: user,
+            history: user.history || []
+        });
+    } catch (error) {
+        console.error("Error fetching user history:", error);
+        res.status(500).send('Internal Server Error');
     }
 };
 
@@ -102,7 +110,29 @@ const getLogin = async(req,res,next)=>{
     res.render('login');
 }
 
+const deleteUser = async (req, res) => {
+    try {
+        const { userId } = req.params; // Assuming the user ID is passed as a URL parameter
+        await User.findByIdAndDelete(userId);
+        res.send("User deleted successfully.");
+    } catch (error) {
+        console.error("Error deleting user:", error);
+        res.status(500).send("Failed to delete user.");
+    }
+};
+const renderAdminPage = async (req, res) => {
+    try {
+        const users = await User.find({});
+        res.render('admin', { users: users });
+    } catch (error) {
+        console.error('Failed to fetch users for admin page:', error);
+        res.status(500).send('Error loading admin page');
+    }
+};
+
 module.exports = {
+    deleteUser,
+    renderAdminPage,
     getAllUser,
     getSignUp,
     getLogin,

@@ -41,38 +41,33 @@
         </div>
     </nav>
     <div class="container mt-5">
-        <h3 class="text-white mb-4">History of <%= user.username %>
-        </h3>
-        <% if (history && history.length> 0) { %>
-            <% history.forEach(weatherData=> { %>
-                <div class="card mb-3" style="color: #4B515D; border-radius: 15px;">
-                    <div class="row g-0">
-                        <div class="col-md-4 d-flex align-items-center justify-content-center">
-                            <img src="https://openweathermap.org/img/wn/<%= weatherData.icon %>@2x.png"
-                                alt="Weather Icon" width="100px">
-                        </div>
-                        <div class="col-md-8">
-                            <div class="card-body">
-                                <h5 class="card-title">
-                                    <%= weatherData.city %>
-                                </h5>
-                                <p class="card-text"><small class="text-muted">
-                                        <%= new Date(weatherData.createdAt).toLocaleDateString() %>
-                                    </small></p>
-                                <p class="card-text">
-                                    <%= weatherData.temperature %>°C, <%= weatherData.description %>
-                                </p>
-                                <p class="card-text">Wind Speed: <%= weatherData.windSpeed %> m/s</p>
-                                <p class="card-text">Humidity: <%= weatherData.humidity %>%</p>
-                                <p class="card-text">Pressure: <%= weatherData.pressure %> mb</p>
-                            </div>
-                        </div>
+        <h3 class="text-white mb-4">History of <%= user.username %></h3>
+        <% if (history.length > 0) { %>
+            <% history.forEach((item) => { %>
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <% if (item.type === 'Weather') { %>
+                            <h5 class="card-title">Weather in <%= item.refId.city %></h5>
+                            <p class="card-text">
+                                <%= item.refId.temperature %>°C, <%= item.refId.description %>
+                            </p>
+                            <p class="card-text">Wind Speed: <%= item.refId.windSpeed %> m/s</p>
+                            <p class="card-text">Humidity: <%= item.refId.humidity %>%</p>
+                            <p class="card-text">Pressure: <%= item.refId.pressure %> mb</p>
+                        <% } else if (item.type === 'Country') { %>
+                            <h5 class="card-title">Country: <%= item.refId.name %></h5>
+                            <p class="card-text">Capital: <%= item.refId.capital %></p>
+                            <p class="card-text">Population: <%= item.refId.population %></p>
+                            <% } else if (item.type === 'Airport') { %>
+                                <h5 class="card-title">Airport: <%= item.refId.name %> (<%= item.refId.iataCode %>)</h5>
+                                <p class="card-text">City: <%= item.refId.city %></p>
+                            <% } %>
                     </div>
                 </div>
-                <% }) %>
-                    <% } else { %>
-                        <div class="text-center text-white">No weather history found.</div>
-                        <% } %>
+            <% }); %>            
+        <% } else { %>
+            <div class="text-center text-white">No history found.</div>
+        <% } %>
     </div>
     <footer class="footer bg-dark text-light pt-4 mt-auto">
         <div class="container">

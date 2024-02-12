@@ -28,15 +28,6 @@ const weatherSchema = new Schema({
     latitiude:{
         type:Number,
     },
-    countryName: {
-        type: Array,
-    },
-    countryCapital: {
-        type: Array,
-    },
-    countryPopulation: {
-        type:Number,
-    }
 },{timestamps: true})
 
 const WeatherData = mongoose.model('Weather', weatherSchema);

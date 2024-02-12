@@ -40,6 +40,9 @@
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
               <li><a class="dropdown-item" href="#">My account</a></li>
+              <% if (isAdmin) { %>
+                <li><a class="dropdown-item" href="/admin">Admin</a></li>
+              <% } %>
               <li><a class="dropdown-item" href="/login">Log out</a></li>
             </ul>
           </li>
@@ -74,12 +77,11 @@
           <div class="mb-2">Wind Speed: <%= weatherData.wind.speed %> m/s</div>
           <div class="mb-2">Humidity: <%= weatherData.main.humidity %>%</div>
           <div class="mb-2">Pressure: <%= weatherData.main.pressure %> mb</div>
-          <div class="mb-2">Country name: <%= countryData[0].name.common %></div>
-          <div class="mb-2">Country capital: <%= countryData[0].capital %></div>
-          <div class="mb-2">Country population: <%= countryData[0].population %></div>
           <img src="https://openweathermap.org/img/wn/<%=weatherData.weather[0].icon%>@2x.png" alt="Weather Icon"
             width="100px">
         </div>
+        <a href="/weather/info/<%= weatherData.sys.country %>" class="btn btn-info">Country Info</a>
+        <a href="/airports/info/<%= city %>" class="btn btn-secondary">Airports Info</a>
         <% } %>
     </div>
 

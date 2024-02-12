@@ -7,7 +7,7 @@ router.get('/logout', (req, res) => {
             console.log(err);
             res.status(500).send('Could not log out, please try again.');
         } else {
-            res.clearCookie('connect.sid'); // This line depends on your session cookie name
+            res.clearCookie('connect.sid');
             res.redirect('/login');
         }
     });
